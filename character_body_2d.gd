@@ -1,0 +1,56 @@
+extends CharacterBody2D
+
+@export var speed = 300
+@export var acceleration = 800
+@export var friction = 600
+@export var jump_force = -500
+@export var gravity = 1000
+@export var max_fall_speed = 900 
+@export var dash_speed = 600
+@export var dash_time = 0.2
+@export var dash_cooldown = 2
+var is_dashing = false
+var dash_timer = 0.0
+var dash_cooldown_timer = 2
+var dash_direction = 0 
+var max_dash = 1
+
+var jump_count = 0
+var max_jumps = 2
+func _physics_process(delta: float) -> void:
+	if dash_cooldown_timer > 0: 
+		dash_cooldown_timer -= delta
+	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0:
+		is_dashing = true 
+		dash_timer = dash_time
+		dash_cooldown_timer = dash_cooldown
+		dash_direction = sign(velocity.x)
+		if dash_direction == 0:
+			dash_direction = 1 
+		
+	if is_dashing:
+		dash_timer -= delta
+		velocity.x = dash_direction * dash_speed
+		velocity.y = 0 
+		if dash_timer <= 0:
+			is_dashing = false
+		move_and_slide()
+		return	
+	
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		velocity.y = min(velocity.y, max_fall_speed)
+	else:
+		jump_count = 0
+	
+	var direction = Input.get_axis("izquierda", "derecha")
+	if direction != 0:
+		velocity.x = move_toward(velocity.x, direction * speed, acceleration * delta)
+	else:
+		velocity.x = move_toward(velocity.x,0, friction * delta)
+	
+	if Input.is_action_just_pressed("saltar") and jump_count < max_jumps:
+		velocity.y = jump_force
+		jump_count += 1			
+
+	move_and_slide()
