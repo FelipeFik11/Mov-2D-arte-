@@ -13,21 +13,29 @@
 [ext_resource type="Texture2D" uid="uid://d2t3h8kba8b0w" path="res://Sprites tarea 3 2D/Caminata 1.png" id="11_pbfsw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
-size = Vector2(40, 95)
+size = Vector2(59, 122)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5tmop"]
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("8_op7ga")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
 "texture": ExtResource("2_nvl01")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": ExtResource("3_ivps1")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": ExtResource("4_urp6f")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": ExtResource("5_bwjto")
 }],
 "loop": true,
@@ -77,11 +85,11 @@ animations = [{
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1279496806]
-position = Vector2(547, 247.5)
+position = Vector2(556.5, 257)
 shape = SubResource("RectangleShape2D_i3pqv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1690944825]
-position = Vector2(550, 241.00002)
-scale = Vector2(0.035435975, 0.0373586)
+position = Vector2(562.1963, 247.45216)
+scale = Vector2(0.05000241, 0.04853374)
 sprite_frames = SubResource("SpriteFrames_5tmop")
-animation = &"dash"
+animation = &"Idle"

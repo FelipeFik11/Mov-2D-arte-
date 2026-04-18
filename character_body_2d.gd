@@ -1,5 +1,4 @@
 extends CharacterBody2D
-
 @export var speed = 300
 @export var acceleration = 800
 @export var friction = 600
@@ -14,10 +13,28 @@ var dash_timer = 0.0
 var dash_cooldown_timer = 2
 var dash_direction = 0 
 var max_dash = 1
-
+var double_jump_used = false
 var jump_count = 0
 var max_jumps = 2
+
+
 func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		if velocity.y < 0:
+			$AnimatedSprite2D.play("jump")
+		else:
+			$AnimatedSprite2D.play("Fall")
+	else:
+		if velocity.x == 0:
+			$AnimatedSprite2D.play("Idle")
+		else:
+			$AnimatedSprite2D.play("walk")	
+	if velocity.x != 0:
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+	
+	if is_dashing:
+		$AnimatedSprite2D.play("dash")			
+				
 	if dash_cooldown_timer > 0: 
 		dash_cooldown_timer -= delta
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0:
@@ -54,3 +71,4 @@ func _physics_process(delta: float) -> void:
 		jump_count += 1			
 
 	move_and_slide()
+	
