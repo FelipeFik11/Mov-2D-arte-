@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://divyekbca37f1" path="res://player.tscn" id="1_wrbek"]
 [ext_resource type="Texture2D" uid="uid://58bupsso88lu" path="res://caja.png" id="2_h06de"]
+[ext_resource type="Texture2D" uid="uid://bn22cunsknt5s" path="res://árbolin.png" id="3_7gdj4"]
+[ext_resource type="Script" uid="uid://bavtdr7cfjpbl" path="res://arbol.gd" id="3_j87l1"]
+[ext_resource type="Texture2D" uid="uid://cqn6ouisp35v2" path="res://pasto.png" id="3_ymy7k"]
 
 [sub_resource type="GDScript" id="GDScript_h06de"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrbek"]
-size = Vector2(1163, 223)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h06de"]
 size = Vector2(72, 68)
@@ -28,17 +28,52 @@ scale_min = 141.0
 scale_max = 141.0
 color = Color(4.7046065, 4.7046065, 4.7046065, 0.36078432)
 
+[sub_resource type="Animation" id="Animation_j87l1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ymy7k"]
+resource_name = "wind"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.034906585, -0.034906585, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vttml"]
+_data = {
+&"RESET": SubResource("Animation_j87l1"),
+&"wind": SubResource("Animation_ymy7k")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrbek"]
+size = Vector2(1163, 223)
+
 [node name="Nivel" type="Node2D" unique_id=2116055616]
 script = SubResource("GDScript_h06de")
 
 [node name="Player" parent="." unique_id=457413214 instance=ExtResource("1_wrbek")]
 position = Vector2(0, 1)
-
-[node name="piso" type="StaticBody2D" parent="." unique_id=459892785]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="piso" unique_id=1169893935]
-position = Vector2(578, 592)
-shape = SubResource("RectangleShape2D_wrbek")
 
 [node name="plataforma" type="StaticBody2D" parent="." unique_id=2073252575]
 
@@ -88,10 +123,24 @@ trail_enabled = true
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_h06de")
 
-[node name="props" type="Node2D" parent="." unique_id=166639881]
+[node name="Arbol" type="Node2D" parent="." unique_id=1338747717]
+script = ExtResource("3_j87l1")
 
-[node name="Tree" type="Node2D" parent="props" unique_id=1949502692]
+[node name="Sprite2D" type="Sprite2D" parent="Arbol" unique_id=1424240087]
+position = Vector2(746, 400.00003)
+scale = Vector2(0.18554686, 0.2167969)
+texture = ExtResource("3_7gdj4")
 
-[node name="Sprite2D" type="Sprite2D" parent="props/Tree" unique_id=450971267]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Arbol" unique_id=1085110138]
+libraries/ = SubResource("AnimationLibrary_vttml")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="props/Tree" unique_id=1079606640]
+[node name="piso" type="StaticBody2D" parent="." unique_id=459892785]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="piso" unique_id=1169893935]
+position = Vector2(584, 592)
+shape = SubResource("RectangleShape2D_wrbek")
+
+[node name="Sprite2D" type="Sprite2D" parent="piso" unique_id=1234251618]
+position = Vector2(667, 112.99994)
+scale = Vector2(1.8741319, 1.4757502)
+texture = ExtResource("3_ymy7k")

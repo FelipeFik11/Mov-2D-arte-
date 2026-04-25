@@ -17,6 +17,7 @@ var max_dash = 1
 var double_jump_used = false
 var jump_count = 0
 var max_jumps = 2
+
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		if velocity.y < 0:
