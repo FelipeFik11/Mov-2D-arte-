@@ -12,9 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://chbvda0ljcb0b" path="res://Sprites tarea 3 2D/Caminata 3.png" id="10_pylmc"]
 [ext_resource type="Texture2D" uid="uid://d2t3h8kba8b0w" path="res://Sprites tarea 3 2D/Caminata 1.png" id="11_pbfsw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
-size = Vector2(59, 122)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_5tmop"]
 animations = [{
 "frames": [{
@@ -81,15 +78,70 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i3pqv"]
+size = Vector2(59, 122)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nvl01"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(2, 4, 1)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 200, 0)
+
+[sub_resource type="GDScript" id="GDScript_nvl01"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_urp6f"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_max = 40.0
+gravity = Vector3(0, 200, 0)
+scale_min = 0.59999996
+scale_max = 0.59999996
+color = Color(0.72464263, 0.7246426, 0.7246426, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ivps1"]
+particle_flag_disable_z = true
+spread = 20.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+color = Color(1, 0, 0.7019608, 1)
+
 [node name="Player" type="CharacterBody2D" unique_id=457413214]
+position = Vector2(1, 1)
 script = ExtResource("1_4flbx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1279496806]
-position = Vector2(556.5, 257)
-shape = SubResource("RectangleShape2D_i3pqv")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1690944825]
-position = Vector2(562.1963, 247.45216)
+position = Vector2(8.000015, -12)
 scale = Vector2(0.05000241, 0.04853374)
 sprite_frames = SubResource("SpriteFrames_5tmop")
 animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1279496806]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_i3pqv")
+
+[node name="JumpParticles" type="GPUParticles2D" parent="." unique_id=1612573289]
+position = Vector2(1, 58)
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_nvl01")
+script = SubResource("GDScript_nvl01")
+
+[node name="WalkParticles" type="GPUParticles2D" parent="." unique_id=1272548651]
+emitting = false
+amount = 21
+explosiveness = 0.2
+process_material = SubResource("ParticleProcessMaterial_urp6f")
+
+[node name="DashParticles2D" type="GPUParticles2D" parent="." unique_id=423694477]
+position = Vector2(-1, -7)
+emitting = false
+amount = 25
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ivps1")
